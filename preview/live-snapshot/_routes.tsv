@@ -1,0 +1,43 @@
+/	200
+/a-propos	200
+/acceleration-entreprises	200
+/blog	200
+/blog/cas-client-offre-demandes-qualifiees	200
+/blog/crm-simple-suivi-prospects	200
+/blog/developper-entreprise-algerie-5-leviers	200
+/blog/erreurs-prospection-b2b	200
+/blog/publicite-digitale-budget-utile	200
+/blog/structurer-cycle-commercial-30-jours	200
+/cgv	200
+/confidentialite	200
+/contact	200
+/equipe	200
+/evenements	200
+/formations	200
+/guide-entreprises	200
+/mentions-legales	200
+/partenaires	200
+/realisations	200
+/reservation-formation	200
+/ressources	200
+/services	200
+/services/acceleration	200
+/services/assistance-commerciale	200
+/services/commercial/assistance-commerciale	200
+/services/commercial/prospection-b2b	200
+/services/community-management	200
+/services/digital/community-management	200
+/services/digital/produit-digital	200
+/services/digital/publicite-digitale	200
+/services/digital/site-web	200
+/services/formation	200
+/services/formation#b2b	200
+/services/formation#catalogue	200
+/services/formation#mentorat	200
+/services/formation/b2b	307 -> /services/formation#b2b
+/services/formation/catalogue	307 -> /services/formation#catalogue
+/services/formation/mentorat	307 -> /services/formation#mentorat
+/services/prospection-b2b	200
+/services/publicite-digitale	200
+/services/site-web	200
+/tarifs	200

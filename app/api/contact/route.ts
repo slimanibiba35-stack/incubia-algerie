@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { resend, EMAIL_CONFIG } from '@/lib/resend';
+import { getResend, EMAIL_CONFIG } from '@/lib/resend';
 import { generateContactEmail, generateContactConfirmationEmail } from '@/lib/email-templates';
 
 export async function POST(request: NextRequest) {
@@ -13,6 +13,12 @@ export async function POST(request: NextRequest) {
                 { error: 'Missing required fields' },
                 { status: 400 }
             );
+        }
+
+        const resend = getResend();
+        if (!resend) {
+            console.error('RESEND_API_KEY is not set: contact message not sent');
+            return NextResponse.json({ error: 'Email service not configured' }, { status: 503 });
         }
 
         // Send email to admin
@@ -30,6 +36,13 @@ export async function POST(request: NextRequest) {
                 message,
             }),
         });
+
+        // Resend reports failures in `error` instead of throwing: without this check the visitor
+        // was told "Message envoyé" even when nothing reached Incubia.
+        if (adminEmail.error) {
+            console.error('Resend refused the admin email:', adminEmail.error);
+            return NextResponse.json({ error: 'Failed to send email' }, { status: 502 });
+        }
 
         // Send confirmation email to user
         const userEmail = await resend.emails.send({

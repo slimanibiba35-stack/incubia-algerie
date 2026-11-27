@@ -100,6 +100,26 @@
   --sidebar-accent-foreground: var(--c-primary-deep);
   --sidebar-border: var(--c-border-neutral);
   --sidebar-ring: var(--c-primary-dark-mint);
+
+  /* About page tokens (taken from the live site's compiled CSS, 26/11/2026) */
+  --about-bg-light: #f9faf9;
+  --about-bg-white: #fff;
+  --about-bg-dark: #0d1f1a;
+  --about-bg-dark-end: #1a1a3e;
+  --about-primary: #1b1afe;
+  --about-primary-end: #4b4aff;
+  --about-secondary: #ca9bfa;
+  --about-text-heading: #0d1f1a;
+  --about-text-body: #47534e;
+  --about-border: #e7ebe9;
+  --about-border-hover: #1b1afe;
+  --about-border-width: 2px;
+  --about-radius-card: 1.5rem;
+  --about-radius-hero: 2rem;
+  --about-shadow-card: 0 4px 24px #1b1afe14;
+  --about-shadow-lift: 0 20px 60px #1b1afe24;
+  --about-blob-primary-opacity: .08;
+  --about-blob-secondary-opacity: .06;
 }
 
 .dark {
@@ -193,6 +213,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   * {
@@ -201,5 +222,18 @@
 
   body {
     @apply bg-background text-foreground tracking-tight;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 }
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@utility animate-fade-in { animation: .3s ease-out fade-in; }
+@utility animate-scale-in { animation: .5s ease-out scale-in; }

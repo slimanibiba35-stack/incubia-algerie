@@ -1,132 +1,52 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from "next"
+import { SITE_URL } from "@/lib/site"
+
+// Same pages as the live sitemap (26/11/2026), plus the blog posts and the newer service URLs
+// that the live navigation links to.
+const pages = [
+  "",
+  "/acceleration-entreprises",
+  "/formations",
+  "/services",
+  "/services/commercial/prospection-b2b",
+  "/services/commercial/assistance-commerciale",
+  "/services/digital/site-web",
+  "/services/digital/produit-digital",
+  "/services/digital/publicite-digitale",
+  "/services/digital/community-management",
+  "/services/formation",
+  "/services/acceleration",
+  "/services/prospection-b2b",
+  "/services/assistance-commerciale",
+  "/services/site-web",
+  "/services/publicite-digitale",
+  "/services/community-management",
+  "/realisations",
+  "/tarifs",
+  "/guide-entreprises",
+  "/contact",
+  "/equipe",
+  "/ressources",
+  "/blog",
+  "/blog/developper-entreprise-algerie-5-leviers",
+  "/blog/erreurs-prospection-b2b",
+  "/blog/crm-simple-suivi-prospects",
+  "/blog/structurer-cycle-commercial-30-jours",
+  "/blog/publicite-digitale-budget-utile",
+  "/blog/cas-client-offre-demandes-qualifiees",
+  "/evenements",
+  "/a-propos",
+  "/partenaires",
+  "/mentions-legales",
+  "/confidentialite",
+  "/cgv",
+]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://incubia-algerie-v0.vercel.app' // Replace with your actual domain
-
-    return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 1,
-        },
-        {
-            url: `${baseUrl}/accompagnement`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        },
-        {
-            url: `${baseUrl}/formations`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        },
-        {
-            url: `${baseUrl}/contact`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/postuler`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/equipe`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-        },
-        // Services
-        {
-            url: `${baseUrl}/services/domiciliation`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-        },
-        {
-            url: `${baseUrl}/services/coworking`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-        },
-        {
-            url: `${baseUrl}/services/financement`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-        },
-        {
-            url: `${baseUrl}/services/creation`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-        },
-        {
-            url: `${baseUrl}/services/mvp-building`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/services/saas-platform`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        // Content
-        {
-            url: `${baseUrl}/ressources`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.7,
-        },
-        {
-            url: `${baseUrl}/blog`,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/evenements`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.6,
-        },
-        // Company
-        {
-            url: `${baseUrl}/a-propos`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.6,
-        },
-        {
-            url: `${baseUrl}/partenaires`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.5,
-        },
-        // Legal
-        {
-            url: `${baseUrl}/mentions-legales`,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.3,
-        },
-        {
-            url: `${baseUrl}/confidentialite`,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.3,
-        },
-        {
-            url: `${baseUrl}/cgv`,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.3,
-        },
-    ]
+  return pages.map((p) => ({
+    url: `${SITE_URL}${p}`,
+    lastModified: new Date(),
+    changeFrequency: p === "" ? "weekly" : "monthly",
+    priority: p === "" ? 1 : p.split("/").length <= 2 ? 0.8 : 0.6,
+  }))
 }

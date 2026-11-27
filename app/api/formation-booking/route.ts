@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { resend, EMAIL_CONFIG } from '@/lib/resend';
+import { getResend, EMAIL_CONFIG } from '@/lib/resend';
 import { generateFormationBookingEmail, generateFormationConfirmationEmail } from '@/lib/email-templates';
 
 export async function POST(request: NextRequest) {
@@ -25,6 +25,12 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        const resend = getResend();
+        if (!resend) {
+            console.error('RESEND_API_KEY is not set: formation booking not sent');
+            return NextResponse.json({ error: 'Email service not configured' }, { status: 503 });
+        }
+
         // Send email to admin
         const adminEmail = await resend.emails.send({
             from: EMAIL_CONFIG.from,
@@ -43,6 +49,12 @@ export async function POST(request: NextRequest) {
                 availability,
             }),
         });
+
+        // Resend reports failures in `error` instead of throwing (see /api/contact).
+        if (adminEmail.error) {
+            console.error('Resend refused the admin email:', adminEmail.error);
+            return NextResponse.json({ error: 'Failed to send email' }, { status: 502 });
+        }
 
         // Send confirmation email to user
         const userEmail = await resend.emails.send({

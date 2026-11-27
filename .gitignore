@@ -25,3 +25,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# generated review screenshots (rebuild with preview/compare-live.mjs + preview/make-review.mjs)
+/preview/screenshots/compare/
+/preview/screenshots/vs-preview/
+/preview/screenshots/pages/
+/preview/screenshots/round2/
+/preview/screenshots/hero-story/
+/preview/screenshots/review/
+/preview/review.html
+
+# local tool settings
+/.claude/
