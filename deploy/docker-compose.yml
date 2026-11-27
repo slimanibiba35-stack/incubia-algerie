@@ -1,0 +1,24 @@
+# Incubia site behind Dokploy's Traefik (network "dokploy-network", cert resolver "letsencrypt",
+# both Dokploy defaults). Secrets live in /opt/incubia/.env on the server, never in git.
+services:
+  incubia:
+    build: .
+    image: incubia-site:latest
+    container_name: incubia-site
+    restart: unless-stopped
+    env_file: .env
+    networks: [dokploy-network]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+      - traefik.http.routers.incubia-web.rule=Host(`incubia-algerie.com`) || Host(`www.incubia-algerie.com`)
+      - traefik.http.routers.incubia-web.entrypoints=web
+      - traefik.http.routers.incubia-web.middlewares=redirect-to-https@file
+      - traefik.http.routers.incubia-secure.rule=Host(`incubia-algerie.com`) || Host(`www.incubia-algerie.com`)
+      - traefik.http.routers.incubia-secure.entrypoints=websecure
+      - traefik.http.routers.incubia-secure.tls.certresolver=letsencrypt
+      - traefik.http.services.incubia.loadbalancer.server.port=3000
+
+networks:
+  dokploy-network:
+    external: true
